@@ -1,0 +1,4 @@
+# from galaxy
+
+# NodeJS install role
+- src: geerlingguy.nodejs
