@@ -3,6 +3,8 @@
     - debug: msg="AWS_ACCESS_KEY_ID = {{ lookup('env','AWS_ACCESS_KEY_ID') }}"
     - debug: msg="AWS_SECRET_ACCESS_KEY = {{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
     - lightsail:
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
         state: running
         name: host01
         region: us-east-1
