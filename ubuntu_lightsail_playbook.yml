@@ -54,12 +54,15 @@
         - host01
         - host02
         - host03
-      register: echo
+      register: lightsail
+
+    - debug:
+        msg: '{{lightsail}}'
 
     - debug:
         msg: 'Name: {{ item.instance.name }}'
-        loop: '{{echo.results}}'
+        loop: '{{lightsail.results}}'
 
     - debug:
         msg: 'IP is {{ item.networking.private_ip_address }}'
-        loop: '{{echo.results}}'
+        loop: '{{lightsail.results}}'
