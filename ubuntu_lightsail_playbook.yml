@@ -1,5 +1,7 @@
 - hosts: all
   tasks:
+    - debug: msg="AWS_ACCESS_KEY_ID = {{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    - debug: msg="AWS_SECRET_ACCESS_KEY = {{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
     - lightsail:
         state: running
         name: host01
