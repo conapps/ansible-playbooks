@@ -57,7 +57,7 @@
       register: lightsail
 
     - debug:
-        msg: '{{lightsail}}'
+        msg: '{{lightsail.results}}'
 
     - debug:
         msg: 'Name: {{ item.instance.name }}'
