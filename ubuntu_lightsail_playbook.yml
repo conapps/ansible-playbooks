@@ -1,18 +1,24 @@
-# Create a new Lightsail instance, register the instance details
-- lightsail:
-    state: present
-    name: myinstance
-    region: us-east-1
-    zone: us-east-1a
-    blueprint_id: ubuntu_16_04
-    bundle_id: nano_1_0
-    key_pair_name: id_rsa
-    user_data: " echo 'hello world' > /home/ubuntu/test.txt"
-    wait_timeout: 500
-  register: my_instance
+- hosts: all
+  tasks:
+    - debug: msg="AWS_ACCESS_KEY_ID = {{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    - debug: msg="AWS_SECRET_ACCESS_KEY = {{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+    - lightsail:
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+        # Create a new Lightsail instance, register the instance details
+        state: present
+        name: myinstance
+        region: us-east-1
+        zone: us-east-1a
+        blueprint_id: ubuntu_16_04
+        bundle_id: nano_1_0
+        key_pair_name: id_rsa
+        user_data: " echo 'hello world' > /home/ubuntu/test.txt"
+        wait_timeout: 500
+      register: my_instance
 
-- debug:
-    msg: 'Name is {{ my_instance.instance.name }}'
+    - debug:
+        msg: 'Name is {{ my_instance.instance.name }}'
 
-- debug:
-    msg: 'IP is {{ my_instance.instance.public_ip_address }}'
+    - debug:
+        msg: 'IP is {{ my_instance.instance.public_ip_address }}'
