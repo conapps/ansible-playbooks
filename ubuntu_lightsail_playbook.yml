@@ -6,7 +6,7 @@
         aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
         aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
         # Create a new Lightsail instance, register the instance details
-        state: running
+        state: present
         name: myinstance
         region: us-east-1
         zone: us-east-1a
@@ -14,11 +14,12 @@
         bundle_id: nano_1_0
         key_pair_name: id_rsa
         user_data: " echo 'hello world' > /home/ubuntu/test.txt"
-        wait_timeout: 500
+        wait: yes
+        wait_timeout: 180000
       register: my_instance
 
     - debug:
         msg: 'Name is {{ my_instance.instance.name }}'
 
     - debug:
-        msg: 'IP is {{ my_instance.instance.public_ip_address }}'
+        msg: 'IP is {{ my_instance.instance }}'
