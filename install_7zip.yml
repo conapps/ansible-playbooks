@@ -5,7 +5,7 @@
         url: https://www.7-zip.org/a/7z1805-x64.exe
         dest: C:\temp\7z.msi
 
-  - name: ensure 7-Zip is installed via win_package
+    - name: ensure 7-Zip is installed via win_package
       win_package:
         path: C:\temp\7z.msi
         state: present
