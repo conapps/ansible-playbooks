@@ -1,7 +1,7 @@
 - hosts: all
   tasks:
     win_package:
-      path: https://www.7-zip.org/a/7z1805-x64.exe
+      path: 'https://www.7-zip.org/a/7z1805-x64.exe'
       product_id: 7-Zip
       arguments: /S
       state: present
