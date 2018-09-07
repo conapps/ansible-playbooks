@@ -22,4 +22,4 @@
         msg: 'Name is {{ my_instance.instance.name }}'
 
     - debug:
-        msg: 'IP is {{ my_instance.instance }}'
+        msg: 'IP is {{ my_instance.instance.networking.private_ip_address }}'
