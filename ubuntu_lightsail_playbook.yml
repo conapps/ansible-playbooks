@@ -50,5 +50,5 @@
     - debug:
         msg: 'Name is {{ host01.instance.name }}'
 
-    - ? debug
-      msg: 'IP is {{ host01.instance.private_ip_address }}'
+    - debug:
+        msg: 'IP is {{ host01.instance.private_ip_address }}'
