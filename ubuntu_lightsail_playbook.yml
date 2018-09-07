@@ -55,14 +55,3 @@
         - host02
         - host03
       register: lightsail
-
-    - debug:
-        msg: '{{lightsail.results}}'
-
-    - debug:
-        msg: 'Name: {{ item.instance.name }}'
-        loop: '{{lightsail.results}}'
-
-    - debug:
-        msg: 'IP is {{ item.networking.private_ip_address }}'
-        loop: '{{lightsail.results}}'
