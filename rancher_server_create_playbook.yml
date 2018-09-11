@@ -13,3 +13,20 @@
         key_pair_name: master_key
         wait: yes
         wait_timeout: 5000
+        register: server
+    - debug:
+        msg: '{{ server }}'
+    - uri:
+        url: http://awx.lightsail.conatest.click/api/v2/inventories/6/hosts/
+        validate_certs: no
+        method: POST
+        user: '{{ansible_host_username}}'
+        password: '{{ansible_host_password}}'
+        status_code: 201
+        body:
+          name: '{{server.networking.private_ip_address}}'
+          enabled: true
+          instance_id: ''
+          description: 'Rancher server'
+          variables: ''
+        body_format: json
