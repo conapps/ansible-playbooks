@@ -24,7 +24,7 @@
         password: '{{awx_host_password}}'
         status_code: 201
         body:
-          name: '{{server.networking.private_ip_address}}'
+          name: '{{server.instance.private_ip_address}}'
           enabled: true
           instance_id: ''
           description: 'Rancher server'
