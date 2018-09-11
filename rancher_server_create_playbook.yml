@@ -22,7 +22,9 @@
         method: POST
         user: '{{awx_host_username}}'
         password: '{{awx_host_password}}'
-        status_code: 204
+        status_code:
+          - 204
+          - 201
         force_basic_auth: yes
         body:
           name: '{{server.instance.private_ip_address}}'
