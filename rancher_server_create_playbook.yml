@@ -20,8 +20,8 @@
         url: http://awx.lightsail.conatest.click/api/v2/inventories/6/hosts/
         validate_certs: no
         method: POST
-        user: '{{ansible_host_username}}'
-        password: '{{ansible_host_password}}'
+        user: '{{awx_host_username}}'
+        password: '{{awx_host_password}}'
         status_code: 201
         body:
           name: '{{server.networking.private_ip_address}}'
