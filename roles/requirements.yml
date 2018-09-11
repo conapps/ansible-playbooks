@@ -1,4 +1,7 @@
 # from galaxy
 
+# Docker install role
+- src: nickjj.docker
+
 # NodeJS install role
 - src: geerlingguy.nodejs
