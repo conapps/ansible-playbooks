@@ -13,7 +13,7 @@
         key_pair_name: master_key
         wait: yes
         wait_timeout: 5000
-        register: server
+      register: server
     - debug:
         msg: '{{ server }}'
     - uri:
