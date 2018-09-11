@@ -23,6 +23,7 @@
         user: '{{awx_host_username}}'
         password: '{{awx_host_password}}'
         status_code: 201
+        force_basic_auth: true
         body:
           name: '{{server.instance.private_ip_address}}'
           enabled: true
