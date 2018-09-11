@@ -17,25 +17,13 @@
     - debug:
         msg: '{{ server }}'
     - uri:
-        url: http://awx.lightsail.conatest.click/api/v2/authtoken/
-        validate_certs: no
-        method: POST
-        status_code: 200
-        body:
-          username: '{{awx_host_username}}'
-          password: '{{awx_host_password}}'
-        body_format: json
-        return_content: yes
-      register: response
-    - debug:
-        msg: '{{ response }}'
-    - uri:
         url: http://awx.lightsail.conatest.click/api/v2/inventories/6/hosts/
         validate_certs: no
         method: POST
-        headers:
-          Authorization: 'Token {{response.json.token}}'
+        user: '{{awx_host_username}}'
+        password: '{{awx_host_password}}'
         status_code: 201
+        force_basic_auth: yes
         body:
           name: '{{server.instance.private_ip_address}}'
           enabled: true
