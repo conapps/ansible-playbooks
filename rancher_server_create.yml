@@ -35,4 +35,4 @@
         body_format: json
     - pause:
         seconds: 120
-      when: '{{server.instance.state.name}}' == 'pending'
+      when: server.instance.state.name == 'pending'
