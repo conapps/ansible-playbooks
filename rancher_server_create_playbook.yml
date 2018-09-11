@@ -33,3 +33,5 @@
           description: 'Rancher server'
           variables: ''
         body_format: json
+    - pause:
+        seconds: 60
