@@ -1,5 +1,7 @@
 - hosts: all
   tasks:
+    - pause:
+        seconds: 60
     - hostname:
         name: rancher_server
     - blockinfile:
