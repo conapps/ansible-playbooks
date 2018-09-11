@@ -17,7 +17,7 @@
     - debug:
         msg: '{{ server }}'
     - uri:
-        url: http://awx.lightsail.conatest.click/api/v2/inventories/6/hosts/
+        url: http://awx.lightsail.conatest.click/api/v2/groups/5/hosts/
         validate_certs: no
         method: POST
         user: '{{awx_host_username}}'
