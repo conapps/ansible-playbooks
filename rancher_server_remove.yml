@@ -20,6 +20,7 @@
         password: '{{awx_host_password}}'
         status_code:
           - 200
+          - 204
         force_basic_auth: yes
       when: item.description == 'Rancher server'
       loop: '{{ hosts.json.results }}'
