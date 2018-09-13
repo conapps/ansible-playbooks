@@ -12,7 +12,7 @@
       register: hosts
     - debug:
         msg: '{{ hosts }}'
-      with_items: '{{hosts.results | map('from_json') | list}}'
+      with_items: '{{hosts.results | map("from_json") | list}}'
     - uri:
         url: 'http://awx.lightsail.conatest.click{{ item.url }}'
         validate_certs: no
@@ -23,4 +23,4 @@
           - 200
         force_basic_auth: yes
       when: item.description == 'Rancher Server'
-      with_items: '{{hosts.results | map('from_json') | list}}'
+      with_items: '{{hosts.results | map("from_json") | list}}'
