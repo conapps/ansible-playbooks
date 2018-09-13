@@ -1,0 +1,27 @@
+- hosts: all
+  tasks:
+    - lightsail:
+        state: absent
+        region: us-east-1
+        name: rancher_server
+    - uri:
+        url: http://awx.lightsail.conatest.click/api/v2/groups/5/hosts/
+        validate_certs: no
+        method: GET
+        user: '{{awx_host_username}}'
+        password: '{{awx_host_password}}'
+        status_code:
+          - 200
+        force_basic_auth: yes
+      register: hosts
+    - uri:
+        url: 'http://awx.lightsail.conatest.click{{ item.url }}'
+        validate_certs: no
+        method: DELETE
+        user: '{{awx_host_username}}'
+        password: '{{awx_host_password}}'
+        status_code:
+          - 200
+        force_basic_auth: yes
+      when: item.description = 'Rancher Server'
+      loop: hosts.results
