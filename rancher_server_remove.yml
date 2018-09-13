@@ -1,5 +1,14 @@
 - hosts: all
   tasks:
+    - lightsail:
+        state: absent
+        region: us-east-1
+        zone: us-east-1a
+        name: rancher_server
+        wait: yes
+        wait_timeout: 5000
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
     - uri:
         url: http://awx.lightsail.conatest.click/api/v2/groups/5/hosts/
         validate_certs: no
