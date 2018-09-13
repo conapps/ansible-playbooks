@@ -26,4 +26,4 @@
           - 200
         force_basic_auth: yes
       when: item.description = 'Rancher Server'
-      loop: hosts.results
+      with_items: hosts.results
