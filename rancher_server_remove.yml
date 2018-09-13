@@ -10,6 +10,8 @@
           - 200
         force_basic_auth: yes
       register: hosts
+    - debug:
+        msg: '{{ hosts }}'
     - uri:
         url: 'http://awx.lightsail.conatest.click{{ item.url }}'
         validate_certs: no
