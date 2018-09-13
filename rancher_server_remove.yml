@@ -19,5 +19,5 @@
         status_code:
           - 200
         force_basic_auth: yes
-      when: item.description = 'Rancher Server'
+      when: item.description == 'Rancher Server'
       with_items: hosts.results
