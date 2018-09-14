@@ -1,6 +1,18 @@
 - hosts: all
   tasks:
-    - docker_container:
+    - name: Install Python 2.7
+      apt:
+        name: python
+        state: present
+    - name: Install PIP
+      apt:
+        name: python-pip
+        state: present
+    - name: Install docker-py
+      pip:
+        name: docker-py
+    - name: Run the Rancher Server container image
+      docker_container:
         name: rancher
         image: rancher/rancher
         state: started
