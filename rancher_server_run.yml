@@ -1,9 +1,9 @@
 - hosts: all
   tasks:
-    - docker:
+    - docker_container:
         name: rancher
         image: rancher/rancher
         state: started
         ports:
-          - 80:80
-          - 443:443
+          - '80:80'
+          - '443:443'
