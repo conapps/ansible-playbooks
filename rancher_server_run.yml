@@ -11,7 +11,7 @@
     - name: Install docker-py
       pip:
         name: docker-py
-        executable: /usr/local/bin/pip2
+        executable: /usr/bin/pip
     - name: Run the Rancher Server container image
       docker_container:
         name: rancher
