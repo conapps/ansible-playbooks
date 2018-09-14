@@ -2,6 +2,10 @@
   tasks:
     - hostname:
         name: rancher_server
+    - lineinfile:
+        path: /etc/hosts
+        regexp: '^127.0.0.1'
+        line: '127.0.0.1  rancher_server'
     - blockinfile:
         path: /etc/environment
         insertafter: EOF
