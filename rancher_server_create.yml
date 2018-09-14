@@ -9,7 +9,7 @@
         region: us-east-1
         zone: us-east-1a
         blueprint_id: ubuntu_16_04
-        bundle_id: nano_1_0
+        bundle_id: small_2_0
         key_pair_name: master_key
         wait: yes
         wait_timeout: 5000

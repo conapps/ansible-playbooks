@@ -12,6 +12,9 @@
       pip:
         name: docker-py
         executable: /usr/bin/pip
+    - name: Sets the python version to 2.7
+      set_fact:
+        ansible_python_interpreter: /usr/bin/python
     - name: Run the Rancher Server container image
       docker_container:
         name: rancher
