@@ -1,0 +1,43 @@
+- hosts: ubuntus
+  gather_facts: yes
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: 'secret/awx.pem'
+    ansible_user: ubuntu
+    ansible_python_interpreter: /usr/bin/python3
+  vars_files:
+    - ./vars/awx.yml
+  tasks:
+    - name: Configure inventory to use docker-compose
+      lineinfile: 
+        dest: /home/ubuntu/awx/installer/inventory
+        regexp: '# use_docker_compose=false' 
+        line: 'use_docker_compose=true'
+        backrefs: yes
+    - name: Configure inventory to use port 8080
+      lineinfile: 
+        dest: /home/ubuntu/awx/installer/inventory
+        regexp: 'host_port=80' 
+        line: 'host_port=8080'
+        backrefs: yes
+    - name: Configure the inventory to use another admin password
+      lineinfile: 
+        dest: /home/ubuntu/awx/installer/inventory
+        regexp: 'admin_password=password' 
+        line: 'admin_password=conatel'
+        backrefs: yes
+    - name: Configure the inventory to use official awx-logos
+      lineinfile: 
+        dest: /home/ubuntu/awx/installer/inventory
+        regexp: '# awx_official=false' 
+        line: 'awx_official=true'
+        backrefs: yes
+    - name: Check if path exists
+      stat: 
+        path: /home/ubuntu/awx-logos
+      register: logos
+    - name: Move awx-logos to awx
+      command: mv /home/ubuntu/awx-logos /home/ubuntu/awx
+      when: logos.stat.exists
+    - name: Run ansible-playbook to install AWX
+      shell: 'cd /home/ubuntu/awx/installer && ansible-playbook -i inventory install.yml'

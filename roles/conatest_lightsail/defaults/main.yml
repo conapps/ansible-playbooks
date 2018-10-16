@@ -1,0 +1,9 @@
+server_name: lightsail
+key_pair_name: id_rsa
+aws_region: us-east-1
+aws_availability_zone: '{{aws_region}}a'
+instance_size: small_2_0
+domain: conatest.click
+blueprint_id: ubuntu_16_04
+ansible_user: ec2-user
+ansible_python_interpreter: /usr/bin/python

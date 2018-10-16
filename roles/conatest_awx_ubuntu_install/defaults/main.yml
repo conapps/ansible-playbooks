@@ -1,0 +1,2 @@
+awx_destination: /home/ubuntu/awx
+awx_logos_destination: /home/ubuntu/awx-logos

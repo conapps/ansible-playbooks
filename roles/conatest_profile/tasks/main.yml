@@ -1,0 +1,14 @@
+- name: Copy the .profile file
+  copy:
+    src: .profile
+    dest: '{{destination}}'
+    mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'
+- name: Copy the .vimrc file
+  copy:
+    src: .vimrc
+    dest: '{{destination}}'
+    mode: 0644
+    owner: '{{user}}'
+    group: '{{user}}'

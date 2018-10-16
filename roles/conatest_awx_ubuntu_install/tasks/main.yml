@@ -1,0 +1,54 @@
+- include_role:
+    name: geerlingguy.ansible
+- include_role:
+    name: geerlingguy.nodejs
+  vars:
+    nodejs_version: '8.x'
+- name: Install Git
+  apt:
+    name: '{{ packages }}'
+    state: present
+  vars:
+    packages:
+      - git
+- name: Clone the AWX Repo
+  git:
+    repo: 'https://github.com/ansible/awx.git'
+    dest: '{{awx_destination}}'
+- name: Clone the AWX Logos Repo
+  git:
+    repo: 'https://github.com/ansible/awx-logos.git'
+    dest: '{{awx_logos_destination}}'
+- name: Configure inventory to use docker-compose
+  lineinfile: 
+    dest: '{{awx_destination}}/installer/inventory'
+    regexp: '# use_docker_compose=false' 
+    line: 'use_docker_compose=true'
+    backrefs: yes
+- name: Configure inventory to use port 8080
+  lineinfile: 
+    dest: '{{awx_destination}}/installer/inventory'
+    regexp: 'host_port=80' 
+    line: 'host_port={{host_port}}'
+    backrefs: yes
+- name: Configure the inventory to use another admin password
+  lineinfile: 
+    dest: '{{awx_destination}}/installer/inventory'
+    regexp: 'admin_password=password' 
+    line: 'admin_password=conatel'
+    backrefs: yes
+- name: Configure the inventory to use official awx-logos
+  lineinfile: 
+    dest: '{{awx_destination}}/installer/inventory'
+    regexp: '# awx_official=false' 
+    line: 'awx_official=true'
+    backrefs: yes
+- name: Check if path exists
+  stat: 
+    path: '{{awx_logos_destination}}'
+  register: logos
+- name: Move awx-logos to awx
+  command: 'mv {{awx_logos_destination}} {{awx_destination}}'
+  when: logos.stat.exists
+- name: Run ansible-playbook to install AWX
+  shell: 'cd {{awx_destination}}/installer && ansible-playbook -i inventory install.yml'

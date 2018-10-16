@@ -1,5 +1,8 @@
 # from galaxy
 
+# Ansible install role
+- src: geerlingguy.ansible
+
 # Docker install role
 - src: nickjj.docker
 

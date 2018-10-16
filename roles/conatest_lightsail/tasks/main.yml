@@ -1,0 +1,32 @@
+- name: Create the Lightsail Instance
+  lightsail:
+    state: present
+    name: '{{server_name}}'
+    region: '{{aws_region}}'
+    zone: '{{aws_availability_zone}}'
+    blueprint_id: '{{blueprint_id}}'
+    bundle_id: '{{instance_size}}'
+    key_pair_name: '{{key_pair_name}}'
+    wait_timeout: 500
+    wait: yes
+  register: lightsail
+- name: Wait for SSH
+  wait_for:
+    port: 22
+    host: '{{ lightsail.instance.public_ip_address }}'
+- name: Register the new instance into the 'ubuntus' group
+  add_host:
+    name: '{{ lightsail.instance.public_ip_address }}'
+    groups: ubuntus
+    ansible_ssh_private_key_file: '{{private_key_file}}'
+    ansible_user: '{{user}}'
+    ansible_python_interpreter: '{{python_interpreter}}'
+- name: Set DNS records
+  route53:
+    state: present
+    zone: '{{domain}}'
+    record: '{{server_name}}.{{domain}}'
+    type: A
+    value: '{{ lightsail.instance.public_ip_address }}'
+    wait: yes
+    overwrite: true

@@ -2,3 +2,10 @@ master_key
 master_key.pub
 
 .DS_store
+secret
+
+awx
+awx-logos
+
+roles/*
+!roles/conatest_*

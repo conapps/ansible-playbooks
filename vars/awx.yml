@@ -1,0 +1,10 @@
+server_name: tower
+key_pair_name: awx
+private_key_file: secret/awx.pem
+aws_region: us-east-1
+instance_size: medium_2_0
+domain: conatest.click
+email: aws@conatel.com.uy
+host_port: 8080
+python_interpreter: /usr/bin/python3
+user: ubuntu

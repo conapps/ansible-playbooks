@@ -1,0 +1,29 @@
+- name: Install Python 2.7
+  apt:
+    update_cache: true
+    name: '{{ packages }}'
+    state: present
+  vars:
+    packages:
+      - python
+- name: Sets the python version to 2.7
+  set_fact:
+    ansible_python_interpreter: /usr/bin/python
+- name: Install Pip2
+  apt:
+    name: '{{ packages }}'
+    state: present
+  vars:
+    packages:
+      - python-pip
+- include_role:
+    name: nickjj.docker
+- name: Agregamos el usuario ubuntu al grupo docker
+  shell: usermod -aG docker ubuntu
+  become: yes
+- name: Install Pip packages
+  pip:
+    name: '{{item}}'
+    executable: /usr/bin/pip
+  loop:
+    - docker-compose
