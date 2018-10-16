@@ -31,12 +31,6 @@
     regexp: 'host_port=80' 
     line: 'host_port={{host_port}}'
     backrefs: yes
-- name: Configure the inventory to use another admin password
-  lineinfile: 
-    dest: '{{awx_destination}}/installer/inventory'
-    regexp: 'admin_password=password' 
-    line: 'admin_password=conatel'
-    backrefs: yes
 - name: Configure the inventory to use official awx-logos
   lineinfile: 
     dest: '{{awx_destination}}/installer/inventory'

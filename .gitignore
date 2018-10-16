@@ -7,5 +7,6 @@ secret
 awx
 awx-logos
 
+roles
 roles/*
 !roles/conatest_*

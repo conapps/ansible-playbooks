@@ -8,7 +8,7 @@ all:
         ansible_python_interpreter: /Users/gmonne/.pyenv/shims/python
     ubuntus:
       hosts:
-        54.89.91.63:
+        18.209.172.146:
       vars:
         ansible_user: ubuntu
         ansible_python_interpreter: /usr/bin/python3

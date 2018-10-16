@@ -26,20 +26,5 @@
         name: conatest_ubuntu_docker
     - include_role:
         name: conatest_awx_ubuntu_install
-    # - name: Generate Letsencrypt SSL certificate
-    #   shell: '/usr/bin/wget https://dl.eff.org/certbot-auto -P /usr/local/bin'
-    # - shell: 'chmod a+x /usr/local/bin/certbot-auto'
-    # - shell: '/usr/local/bin/certbot-auto certonly --standalone -d {{server_name}}.{{domain}} --preferred-challenges http --agree-tos -n -m {{email}} --keep-until-expiring'
-    # - name: Copiamos el archivo de configuración de Bind9
-    #   blockinfile:
-    #     path: /etc/nginx/conf.d/awx.conf 
-    #     insertafter: EOF
-    #     content: '{{lookup("template", "./files/awx.conf.j2")}}'
-    #     create: yes
-    # - name: Install Nginx
-    #   apt:
-    #     name: '{{ packages }}'
-    #     state: present
-    #   vars:
-    #     packages:
-    #       - nginx
+    - include_role:
+        name: conatest_nginx_letsencrypt_proxy_pass
