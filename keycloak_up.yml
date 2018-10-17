@@ -1,0 +1,24 @@
+# ---
+# keycloak_up.yml
+#
+# Crea una maquina virtual en AWS Lightsail e instala keycloak.
+# ---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  vars_files:
+    - ./vars/keycloak.yml
+  tasks:
+    - include_role:
+        name: conatest_lightsail
+
+- hosts: keycloak
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - ./vars/keycloak.yml
+  tasks:
+    - include_role:
+        name: conatest_profile
+    - include_role:
+        name: conatest_ubuntu_server_setup

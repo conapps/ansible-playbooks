@@ -1,0 +1,58 @@
+- name: Update repositories cache
+  apt:
+    update_cache: yes
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+    update_cache: no
+    state: latest
+- name: Add the Certbot repo
+  apt_repository:
+    validate_certs: no
+    repo: 'ppa:certbot/certbot'
+    state: present
+- name: Update repositories cache
+  apt:
+    update_cache: yes
+- name: Install "certbot" and "nginx" package
+  apt:
+    name: '{{item}}'
+    update_cache: no
+    state: latest
+  loop:
+    - python-certbot-nginx
+    - nginx
+- name: Create the .well-known location directory
+  file: 
+    path: '{{well_known_directory}}'
+    state: directory
+- name: Shell test
+  shell: 'echo "WEBSITE1 SSL TEST" > {{well_known_directory}}/test.html'
+- name: Upload the template nginx.conf to /etc/nginx/nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: Upload the template default to /etc/nginx/sites-available/default
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: 0644
+- name: Upload the template proxy.conf to /etc/nginx/proxy.conf
+  template:
+    dest: /etc/nginx/proxy.conf
+    src: proxy.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+- name: Run the certbot command
+  shell: 'certbot --nginx --agree-tos --redirect -m {{email}} --non-interactive --domains {{server_name}}.{{domain}}' 
+  become: true
+- name: Restart the NGINX service
+  service:
+    name: 'nginx.service'
+    state: restarted

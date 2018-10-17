@@ -14,10 +14,10 @@
   wait_for:
     port: 22
     host: '{{ lightsail.instance.public_ip_address }}'
-- name: Register the new instance into the 'ubuntus' group
+- name: Register the new instance into the '{{host_group}}' group
   add_host:
     name: '{{ lightsail.instance.public_ip_address }}'
-    groups: ubuntus
+    groups: '{{host_group}}'
     ansible_ssh_private_key_file: '{{private_key_file}}'
     ansible_user: '{{user}}'
     ansible_python_interpreter: '{{python_interpreter}}'

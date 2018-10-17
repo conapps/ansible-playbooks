@@ -7,8 +7,10 @@ all:
       vars:
         ansible_python_interpreter: /Users/gmonne/.pyenv/shims/python
     ubuntus:
-      hosts:
-        18.209.172.146:
+      children:
+        keycloak:
+          hosts:
+            52.87.76.210:
       vars:
         ansible_user: ubuntu
         ansible_python_interpreter: /usr/bin/python3

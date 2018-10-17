@@ -1,0 +1,20 @@
+server {
+  listen 80;
+  listen [::]:80;
+  server_name {{server_name}}.{{domain}};
+
+  access_log {{access_log_directory}}/access.log;
+  error_log {{error_log_directory}}/error.log;
+
+  root /var/www/html/;
+
+  location ~ /.well-known {
+    allow all;
+    root {{well_known_directory}}/;
+  }
+
+  location / {
+    include proxy.conf;
+    proxy_pass {{http_proxy_pass_url}};
+  }
+}
