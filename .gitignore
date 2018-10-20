@@ -4,7 +4,7 @@ master_key.pub
 .DS_store
 secret
 
-varsold
+vars
 
 awx
 awx-logos
