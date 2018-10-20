@@ -1,0 +1,26 @@
+# ---
+# lab_helpers.yml
+#
+# Ejemplos de como utilizar la API `lab_helpers` desde Ansible
+# ---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  vars_files:
+    - ./vars/lab_helpers.yml
+    - ./vars/credentials.yml
+  tasks:
+    - name: Nos autenticamos con la API
+      uri:
+        url: '{{lab_helpers_url}}'
+        method: POST
+        body:
+          email: '{{lab_helpers_email}}'
+          password: '{{lab_helpers_password}}'
+        body_format: json
+        headers:
+          'Content-Type': 'application/json'
+        return_content: yes
+      register: output
+    - debug:
+        var: output
