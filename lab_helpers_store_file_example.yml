@@ -1,0 +1,43 @@
+# ---
+# lab_helpers_store_file_example.yml
+#
+# Ejemplos de como utilizar la API `lab_helpers` desde Ansible
+# para almacenar un archivo en el servidor.
+# ---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  vars_files:
+    - ./vars/lab_helpers.yml
+    - ./vars/credentials.yml
+  tasks:
+    - name: Obtenemos las credenciales de acceso
+      uri:
+        url: '{{lab_helpers_url}}/api/auth/login/'
+        method: POST
+        body:
+          email: '{{lab_helpers_email}}'
+          password: '{{lab_helpers_password}}'
+        body_format: json
+        headers:
+          'Content-Type': 'application/json'
+        return_content: yes
+      register: output
+    - name: Registramos el token de acceso en una variable
+      set_fact:
+        access_token: '{{output["json"]["accessToken"]}}'
+    - name: Guardamos este playbook en el servidor
+      uri:
+        url: '{{lab_helpers_url}}/api/v1/uploads/text/'
+        method: POST
+        body:
+          text: '{{lookup("file", "./lab_helpers_store_file_example.yml")}}'
+          filename: 'lab_helpers_store_file_example.yml'
+        body_format: json
+        headers:
+          'Content-Type': 'application/json'
+          'Authorization': 'Bearer {{access_token}}'
+        return_content: yes
+      register: output
+    - debug:
+        var: output

@@ -1,0 +1,41 @@
+# ---
+# lab_helpers_store_document_example.yml
+#
+# Ejemplos de como utilizar la API `lab_helpers` desde Ansible
+# para guardar un documento en la base de datos.
+# ---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  vars_files:
+    - ./vars/lab_helpers.yml
+    - ./vars/credentials.yml
+  tasks:
+    - name: Obtenemos las credenciales de acceso
+      uri:
+        url: '{{lab_helpers_url}}/api/auth/login/'
+        method: POST
+        body:
+          email: '{{lab_helpers_email}}'
+          password: '{{lab_helpers_password}}'
+        body_format: json
+        headers:
+          'Content-Type': 'application/json'
+        return_content: yes
+      register: output
+    - name: Registramos el token de acceso en una variable
+      set_fact:
+        access_token: '{{output["json"]["accessToken"]}}'
+    - name: Guardamos un documento en la base
+      uri:
+        url: '{{lab_helpers_url}}/api/v1/documents/'
+        method: POST
+        body: '{{hostvars}}'
+        body_format: json
+        headers:
+          'Content-Type': 'application/json'
+          'Authorization': 'Bearer {{access_token}}'
+        return_content: yes
+      register: output
+    - debug:
+        var: output
