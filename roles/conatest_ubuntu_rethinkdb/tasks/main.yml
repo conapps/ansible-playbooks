@@ -1,0 +1,36 @@
+- name: Add sources file
+  file: 
+    path: /etc/apt/sources.list.d/rethinkdb.list 
+    state: touch
+
+- name: Add repository
+  lineinfile: 
+    dest: /etc/apt/sources.list.d/rethinkdb.list 
+    line: "deb http://download.rethinkdb.com/apt precise main"
+
+- name: Add key
+  apt_key: 
+    url: http://download.rethinkdb.com/apt/pubkey.gpg 
+    state: present
+
+- name: Install
+  apt: 
+    name: rethinkdb 
+    state: present 
+    update_cache: yes
+
+- name: Enable service
+  service: 
+    name: rethinkdb 
+    enabled: yes
+
+- name: Configure instance
+  template: 
+    src: instance.conf.j2 
+    dest: /etc/rethinkdb/instances.d/{{ inventory_hostname }}.conf
+  notify: Start RethinkDB
+
+- name: Start RethinkDB
+  service: 
+    name: rethinkdb
+    state: started

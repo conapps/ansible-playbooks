@@ -8,9 +8,12 @@ all:
         ansible_python_interpreter: /Users/gmonne/.pyenv/shims/python
     ubuntus:
       children:
+        awx:
+          hosts:
+            ansibletower.conatest.click:
         keycloak:
           hosts:
-            52.87.76.210:
+            52.207.6.52:
       vars:
         ansible_user: ubuntu
         ansible_python_interpreter: /usr/bin/python3

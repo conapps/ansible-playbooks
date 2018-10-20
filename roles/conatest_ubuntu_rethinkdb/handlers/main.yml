@@ -1,0 +1,4 @@
+- name: Start RethinkDB
+  service: 
+    name: rethinkdb
+    state: started

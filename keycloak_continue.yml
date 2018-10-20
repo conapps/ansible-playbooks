@@ -9,4 +9,4 @@
     - ./vars/keycloak.yml
   tasks:
     - include_role:
-        name: ansiblebit.oracle-java
+        name: conatest_ubuntu_java_8
