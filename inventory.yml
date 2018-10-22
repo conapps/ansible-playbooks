@@ -11,6 +11,8 @@ all:
         awx:
           hosts:
             ansibletower.conatest.click:
+          vars:
+            ansible_ssh_private_key_file: './secret/awx.pem'
         keycloak:
           hosts:
             52.207.6.52:

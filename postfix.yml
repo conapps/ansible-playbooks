@@ -1,0 +1,68 @@
+# ---
+# postfix.yml
+#
+# Playbook para instalar Postfix en un servidor. En este caso el sevidor es el
+# mismo que corre AWX.
+# ---
+- name: Postfix
+  hosts: awx
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - ./vars/postfix.yml
+  tasks:
+    - name: Configure the postfix package
+      debconf:
+        name: postfix
+        question: postfix/mailname
+        vtype: string
+        value: '{{domain_name}}'
+    - name: Configure the postfix package
+      debconf:
+        name: postfix
+        question: postfix/main_mailer_type
+        vtype: string
+        value: 'Internet Site'
+    - name: install mailutils
+      apt:
+        name: mailutils
+        update_cache: yes
+    # - name: Select on which interface the server should run
+    #   lineinfile: 
+    #     dest: '/etc/postfix/main.cf'
+    #     regexp: 'inet_interfaces = all' 
+    #     line: 'inet_interfaces = all'
+    #     backrefs: yes
+    - name: Check to see if a test_message_account was configured
+      debug:
+        msg: 'No test_message_account found. Skipping test.'
+      when: test_message_account is not defined
+    - name: Test that the SMTP server can send emails
+      shell: 'echo "{{text_message_body}}" | mail -s "{{text_message_subject}}" {{test_message_account}}'
+      when: test_message_account is defined
+
+- name: Configure DNS Records
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  vars_files:
+    - ./vars/postfix.yml
+  tasks:
+    - name: Set MX record
+      route53:
+        state: present
+        zone: '{{domain}}'
+        record: '{{domain_name}}'
+        type: MX
+        value: '10 {{domain_name}}'
+        wait: yes
+        overwrite: true
+    - name: Set SPF record
+      route53:
+        state: present
+        zone: '{{domain}}'
+        record: '{{domain_name}}'
+        type: TXT
+        value: '"v=spf1 mx -all"'
+        wait: yes
+        overwrite: true
