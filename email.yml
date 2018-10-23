@@ -1,0 +1,23 @@
+# ---
+# email.yml
+#
+# Playbook para probar el envío de emails.
+# ---
+- name: Email
+  hosts: awx
+  gather_facts: no
+  become: no
+  vars_files:
+    - ./vars/email.yml
+    - ./secret/ses.yml
+  tasks:
+    - name: Sending an e-mail using AWS SES SMTP servers
+      mail:
+        host: '{{smtp_host}}'
+        port: '{{smtp_port}}'
+        username: '{{ses_smtp_username}}'
+        password: '{{ses_smtp_password}}'
+        to: '{{to_email}}'
+        subject: '{{subject}}'
+        body: 'System {{ inventory_hostname }} has been successfully provisioned.'
+        from: '{{ses_smtp_email}}'
