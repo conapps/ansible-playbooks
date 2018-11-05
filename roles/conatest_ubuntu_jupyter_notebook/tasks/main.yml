@@ -1,0 +1,15 @@
+- name: Creates jupyter notebook directory
+  file: 
+    path: '{{jupyter_config_path}}'
+    state: directory
+
+- name: Upload the jupyter_notebook_config.py file
+  template:
+    src: jupyter_notebook_config.py.j2
+    dest: '{{jupyter_config_path}}/jupyter_notebook_config.py'
+    owner: '{{jupyter_user}}'
+    group: '{{jupyter_user}}'
+    mode: 0644
+
+- name: run the notebook
+  shell: 'jupyter notebook'

@@ -8,6 +8,11 @@ all:
         ansible_python_interpreter: /Users/gmonne/.pyenv/shims/python
     ubuntus:
       children:
+        jupyter:
+          hosts:
+            jupyter_notebook.conatest.click:
+          vars:
+            ansible_ssh_private_key_file: './secret/jupyter.pem'
         awx:
           hosts:
             ansibletower.conatest.click:

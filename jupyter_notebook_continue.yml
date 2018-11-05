@@ -1,0 +1,21 @@
+- hosts: jupyter
+  gather_facts: yes
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: 'secret/jupyter.pem'
+    ansible_user: ubuntu
+    ansible_python_interpreter: /usr/bin/python3
+  vars_files:
+    - ./vars/jupyter.yml
+  tasks:
+#    - include_role:
+#        name: andrewrothstein.anaconda
+#      vars:
+#        anaconda_python_ver: 3
+#        anaconda_ver: '5.3.0'
+#        anaconda_checksums: 
+#          Anaconda3-5.3.0-Linux-x86_64.sh: md5:4321e9389b648b5a02824d4473cfdb5f
+    - include_role:
+        name: conatest_ubuntu_jupyter_notebook
+#    - include_role:
+#        name: conatest_nginx_letsencrypt_proxy_pass

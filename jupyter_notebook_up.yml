@@ -1,0 +1,22 @@
+# ---
+# keycloak_up.yml
+#
+# Crea una maquina virtual en AWS Lightsail e instala jupyter notebook.
+# ---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  vars_files:
+    - ./vars/jupyter.yml
+  tasks:
+    - include_role:
+        name: conatest_lightsail
+
+- hosts: jupyter
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - ./vars/jupyter.yml
+  tasks:
+    - include_role:
+        name: conatest_profile
