@@ -21,7 +21,7 @@
     - include_role:
         name: conatest_profile
     - include_role:
-        name: conatest_ubuntu_server_setup
+        name: conatest_server_setup
     - include_role:
         name: conatest_ubuntu_docker
     - include_role:

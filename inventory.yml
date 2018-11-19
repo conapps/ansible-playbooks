@@ -1,6 +1,13 @@
 ---
 all:
   children:
+    plex:
+      hosts:
+        plex.conapps.click
+      vars:
+        ansible_user: ubuntu
+        ansible_private_key_file: '~/Projects/Plex/gmonne.pem'
+        ansible_python_interpreter: /usr/bin/python3
     localhost:
       hosts:
         127.0.0.1:
@@ -20,7 +27,7 @@ all:
             ansible_ssh_private_key_file: './secret/awx.pem'
         keycloak:
           hosts:
-            52.207.6.52:
+            keycloak.conatest.click:
       vars:
         ansible_user: ubuntu
         ansible_python_interpreter: /usr/bin/python3

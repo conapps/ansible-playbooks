@@ -1,2 +1,3 @@
 user: ubuntu
 destination: '/home/{{user}}'
+profile_file_name: '.profile'

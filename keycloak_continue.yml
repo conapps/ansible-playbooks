@@ -4,9 +4,24 @@
   vars:
     ansible_ssh_private_key_file: 'secret/awx.pem'
     ansible_user: ubuntu
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python
   vars_files:
     - ./vars/keycloak.yml
   tasks:
     - include_role:
-        name: conatest_ubuntu_java_8
+        name: geerlingguy.java
+      vars:
+        java_packages:
+          - java-1.8.0-openjdk
+    - name: Update JAVA_HOME
+      blockinfile:
+        path: /etc/environment
+        insertafter: EOF
+        content: |
+          JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64
+    - name: Change security files
+      lineinfile: 
+        dest: '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-8.b13.39.39.amzn1.x86_64/jre/lib/security/java.security'
+        regexp: 'securerandom.source=file:/dev/random' 
+        line: 'securerandom.source=file:/dev/urandom'
+        backrefs: yes

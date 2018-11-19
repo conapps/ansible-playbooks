@@ -1,13 +1,13 @@
 # ---
-# keycloak_up.yml
+# aws_cli_up.yml
 #
-# Crea una maquina virtual en AWS Lightsail e instala keycloak.
+# Levanta una maquina virtual para el laboratorio de AWS.
 # ---
 - hosts: 127.0.0.1
   connection: local
   gather_facts: yes
   vars_files:
-    - ./vars/keycloak.yml
+    - ./vars/aws.yml
   tasks:
     - name: create a new ec2 key pair, returns generated private key
       ec2_key:
@@ -93,8 +93,4 @@
     - include_role:
         name: conatest_server_setup
     - include_role:
-        name: conatest_ubuntu_docker
-    - include_role:
-        name: conatest_nginx_letsencrypt_proxy_pass
-
-# docker run --name mysql -d --net keycloak-network -e MYSQL_DATABASE=keycloak -e MYSQL_USER=keycloak -e MYSQL_PASSWORD=password -e MYSQL_ROOT_PASSWORD=root_password mysql
+        name: conatest_ubuntu_aws_cli

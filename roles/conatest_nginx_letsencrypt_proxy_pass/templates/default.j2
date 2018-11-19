@@ -8,11 +8,6 @@ server {
 
   root /var/www/html/;
 
-  location ~ /.well-known {
-    allow all;
-    root {{well_known_directory}}/;
-  }
-
   location / {
     include proxy.conf;
     proxy_pass {{http_proxy_pass_url}};

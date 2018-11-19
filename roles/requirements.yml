@@ -8,3 +8,6 @@
 
 # NodeJS install role
 - src: geerlingguy.nodejs
+
+# Java install role
+- src: geerlingguy.java

@@ -11,6 +11,10 @@ awx-logos
 
 roles/geerlingguy.ansible
 roles/geerlingguy.nodejs
+roles/geerlingguy.java
+roles/geerlingguy.mysql
 roles/nickjj.docker
 roles/ansiblebit.oracle-java
 roles/andrewrothstein.anaconda
+roles/geerlingguy.pip
+roles/geerlingguy.docker
